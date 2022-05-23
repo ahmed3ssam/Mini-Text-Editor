@@ -16,7 +16,7 @@ struct my_vect
 {
 	list<found> found_arr;
 };
-my_vect my_find(LevelList &lvlst, string word)
+my_vect my_find(LevelList& lvlst, string word)
 {
 	bool flag = false;
 	my_vect ret;
@@ -25,13 +25,13 @@ my_vect my_find(LevelList &lvlst, string word)
 		found match;
 		string line = lvlst[i];
 		int it = line.size() - word.size() + 1;
-		for (int j = 0; j <it; j++)
+		for (int j = 0; j < it; j++)
 		{
 			if (word[0] == line[j])
 			{
 				for (int k = 0; k < word.size(); k++)
 				{
-					
+
 					if (word[k] != line[j + k])
 					{
 						flag = false;
@@ -54,9 +54,9 @@ my_vect my_find(LevelList &lvlst, string word)
 			match.index.clear();
 		}
 	}
-		return ret;
+	return ret;
 }
-void replace(LevelList &lvlst, string word, string with)
+void replace(LevelList& lvlst, string word, string with)
 {
 	int deff = with.size() - word.size();
 	my_vect all = my_find(lvlst, word);
@@ -68,7 +68,7 @@ void replace(LevelList &lvlst, string word, string with)
 		{
 
 			string line = lvlst[current.line_number];
-			line.replace(current.index.front()+deff*i, word.size(),with);
+			line.replace(current.index.front() + deff * i, word.size(), with);
 			lvlst[current.line_number] = line;
 			current.index.pop_front();
 			i++;
@@ -88,7 +88,7 @@ void dis_find(LevelList& lvlst, string word)
 			current.index.pop_front();
 			i++;
 		}
-		cout << "\x1b[33mFound " << word << " " << i << " Times " << "At Line Number " << current.line_number+1 << endl;
+		cout << "\x1b[33mFound " << word << " " << i << " Times " << "At Line Number " << current.line_number + 1 << endl;
 		cout << "\x1b[0m" << endl;
 		cout << endl;
 		all.found_arr.pop_front();
@@ -104,40 +104,43 @@ int main()
 }
 void interface() {
 	ReadWrite Load_save;
-	cout << "----welcome mini text editor" << endl;
+	cout <<"<----*************** Welcome Mini Text Editor ***************---->" << endl;
 	bool Exitfile = false;
 	LevelList lvlst;
 	string input;
 	string replace_word;
-	string file_path="";
+	string file_path = "";
 	bool check = false;
+	bool flag = false;
 	while (!Exitfile) {
-		
 		int choice;
 
-		cout << "to exit press 1" << endl;
+		cout << "1 - Exit" << endl;
 		cout << endl;
-		cout << "to insert line press 2" << endl;
-		cout << endl;
-		cout << "to get line text press 3 " << endl;
-		cout << endl;
-		cout << "to delete line press 4" << endl;
-		cout << endl;
-		cout << "to update line press 5" << endl;
-		cout << endl;
-		cout << "to search all lines press 6" << endl;
-		cout << endl;
-		cout << "to find and replace first with second in all lines press 7 " << endl;
-		cout << endl;
-		cout << "to display all lines with thier numbers press 8" << endl;
-		cout << endl;
-		cout << "to load text file press 9"<<endl; 
+		if (flag)
+		{
+			cout << "2 - Write Text" << endl;
+			cout << endl;
+			cout << "3 - Display Line" << endl;
+			cout << endl;
+			cout << "4 - Remove Line" << endl;
+			cout << endl;
+			cout << "5 - Re-Write Line" << endl;
+			cout << endl;
+			cout << "6 - Find Word" << endl;
+			cout << endl;
+			cout << "7 - Find && Replace" << endl;
+			cout << endl;
+			cout << "8 - Display Text " << endl;
+			cout << endl;
+		}
+		cout << "9 - Load & Edit Text File" << endl;
 		cout << endl;
 		if (check)
 		{
-			cout << "to as text file press 10" << endl;
+			cout << "10 - Convert File To Text " << endl;
 			cout << endl;
-			cout << "to as pdf file press 11" << endl;
+			cout << "11 - Convert To PDF" << endl;
 			cout << endl;
 		}
 		cin >> choice;
@@ -149,7 +152,7 @@ void interface() {
 		}
 		case 2: {
 			int idx;
-			cout << "Enter line number " << endl;
+			cout << "Enter Line number " << endl;
 			cin >> idx;
 			cin.ignore();
 			cout << "Enter text " << endl;
@@ -160,13 +163,13 @@ void interface() {
 				for (int i = 0; i < until; i++)
 				{
 					lvlst.push("");
-					
+
 				}
 				lvlst.push(input);
 			}
 			else
 			{
-			lvlst.insert(idx - 1, input);
+				lvlst.insert(idx - 1, input);
 			}
 			cout << endl;
 			break;
@@ -175,24 +178,23 @@ void interface() {
 		case 3: {
 			cout << "Enter line number" << endl;
 			int idx;
-			
 			cin >> idx;
 			cin.ignore();
 			while (idx > lvlst.len())
 			{
-				cout << "Line Does Not Exist";
-				cout << "Enter line number " << endl;
+				cout << "Line Does Not Exist" << endl;
+				cout << "Enter line number Again" << endl;
 				cin >> idx;
 				cin.ignore();
 			}
-			cout << lvlst[idx-1] << endl;
+			cout << lvlst[idx - 1] << endl;
 			cout << endl;
 			break;
 		}
 		case 4: {
 			cout << "Enter line number" << endl;
 			int idx;
-			
+
 			cin >> idx;
 			cin.ignore();
 			while (idx > lvlst.len())
@@ -207,10 +209,8 @@ void interface() {
 			break;
 		}
 		case 5: {
-			cout << "Enter line number and text" << endl;
 			int idx;
-			
-			cout << "Enter line number " << endl;
+			cout << "Enter line number" << endl;
 			cin >> idx;
 			cin.ignore();
 			while (idx > lvlst.len())
@@ -228,7 +228,7 @@ void interface() {
 
 		}
 		case 6: {
-			
+
 			cout << "Enter string" << endl;
 			getline(cin, input);
 			dis_find(lvlst, input);
@@ -236,7 +236,7 @@ void interface() {
 			break;
 		}
 		case 7: {
-			
+
 			cout << "Enter Word You Want To Replace" << endl;
 			getline(cin, input);
 			cout << "Enter String You Want To Replace IT With" << endl;
@@ -247,19 +247,20 @@ void interface() {
 
 		}
 		case 8: {
-			
-			cout << "display all lines with their numbers" << endl;
+
+			cout << "OutPut : " << endl;
 			cout << endl;
 			lvlst.display();
 			cout << endl;
 			break;
 		}
 		case 9: {
+			flag = true;
 			check = true;
 			lvlst.delete_all();
-			cout << "Enter Text File Path"<<endl;
+			cout << "Enter Text File Path" << endl;
 			getline(cin, input);
-			
+
 			while (true)
 			{
 				try
@@ -267,7 +268,7 @@ void interface() {
 					Load_save.load(input, lvlst);
 					break;
 				}
-				catch(string error)
+				catch (string error)
 				{
 					cout << "Error, Please Enter A Correct Path";
 					getline(cin, input);
