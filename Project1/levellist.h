@@ -40,3 +40,4 @@ public:
 	std::string& operator [](int);
 };
 
+//essam --> insert , push , delete_all, len, display 
