@@ -104,7 +104,7 @@ int main()
 }
 void interface() {
 	ReadWrite Load_save;
-	cout <<"<----*************** Welcome Mini Text Editor ***************---->" << endl;
+	cout << "<----*************** Welcome Mini Text Editor ***************---->" << endl;
 	bool Exitfile = false;
 	LevelList lvlst;
 	string input;
@@ -113,8 +113,7 @@ void interface() {
 	bool check = false;
 	bool flag = false;
 	while (!Exitfile) {
-		int choice;
-
+		string choice;
 		cout << "1 - Exit" << endl;
 		cout << endl;
 		if (flag)
@@ -145,7 +144,15 @@ void interface() {
 		}
 		cin >> choice;
 		cin.ignore();
-		switch (choice) {
+		int _choice;
+		try {
+			// Wrap up code in try-catch block if string is not validated
+			_choice = stoi(choice);
+		}
+		catch (std::invalid_argument e) {
+			_choice = 0;
+		} 
+		switch (_choice) {
 		case 1: {
 			Exitfile = true;
 			break;
@@ -163,7 +170,6 @@ void interface() {
 				for (int i = 0; i < until; i++)
 				{
 					lvlst.push("");
-
 				}
 				lvlst.push(input);
 			}
@@ -257,22 +263,13 @@ void interface() {
 		case 9: {
 			flag = true;
 			check = true;
-			lvlst.delete_all();
 			cout << "Enter Text File Path" << endl;
 			getline(cin, input);
 
-			while (true)
+			while (Load_save.load(input, lvlst))
 			{
-				try
-				{
-					Load_save.load(input, lvlst);
-					break;
-				}
-				catch (string error)
-				{
-					cout << "Error, Please Enter A Correct Path";
-					getline(cin, input);
-				}
+				cout << "Error, Please Enter A Correct Path" << endl;
+				getline(cin, input);
 			}
 			cout << "Loaded Succesfully" << endl;
 			cout << endl;
@@ -288,19 +285,10 @@ void interface() {
 				cout << "Enter Correct Text File Path" << endl;
 				getline(cin, input);
 
-				while (true)
+				while (Load_save.save_text_file(input, lvlst))
 				{
-					try
-					{
-						Load_save.save_text_file(input, lvlst);
-						break;
-					}
-					catch (string error)
-					{
-						cout << "Error, Please Enter A Correct Path";
-						cout << endl;
-						getline(cin, input);
-					}
+					cout << "Error, Please Enter A Correct Path" << endl;
+					getline(cin, input);
 				}
 				cout << "Saved as TEXT Succesfully" << endl;
 			}
@@ -321,19 +309,10 @@ void interface() {
 				cout << "Enter Correct Text File Path" << endl;
 				getline(cin, input);
 
-				while (true)
+				while (Load_save.save_pdf_file(input, lvlst))
 				{
-					try
-					{
-						Load_save.save_pdf_file(input, lvlst);
-						break;
-					}
-					catch (string error)
-					{
-						cout << "Error, Please Enter A Correct Path";
-						cout << endl;
-						getline(cin, input);
-					}
+					cout << "Error, Please Enter A Correct Path" << endl;
+					getline(cin, input);
 				}
 				cout << "Saved as PDF Succesfully" << endl;
 			}
