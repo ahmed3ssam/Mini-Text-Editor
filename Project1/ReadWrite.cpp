@@ -13,13 +13,14 @@ ReadWrite::ReadWrite()
 {
 }
 
-void ReadWrite::load(string file, LevelList& lines)
+int ReadWrite::load(string file, LevelList& lines)
 {
     
     string line;
     ifstream input_file(file);
     if (!input_file.is_open()) {
-       throw "Could't Open File";
+		cout << "File Dose Not Exits\n";
+		return 1;
     }
 
     while (getline(input_file, line)) {
@@ -27,11 +28,9 @@ void ReadWrite::load(string file, LevelList& lines)
     }
 
     input_file.close();
-    return ;
-
+    return 0;
 }
-
-void ReadWrite::save_text_file(string file_name, LevelList& lines)
+int ReadWrite::save_text_file(string file_name, LevelList& lines)
 {
 	fstream file;
 	file.open(file_name + ".txt", ios_base::out);
@@ -39,7 +38,7 @@ void ReadWrite::save_text_file(string file_name, LevelList& lines)
 	if (!file.is_open())
 	{
 		cout << "Unable to open the file.\n";
-		throw "Could't Open File";
+		return 1;
 	}
 	for (int i = 0; i < lines.len(); i++)
 	{
@@ -48,9 +47,9 @@ void ReadWrite::save_text_file(string file_name, LevelList& lines)
 	}
 
 	file.close();
+	return 0;
 }
-
-void ReadWrite::save_pdf_file(string file_name, LevelList& lines)
+int ReadWrite::save_pdf_file(string file_name, LevelList& lines)
 {
 	string pdf = toPdf(lines);
 	fstream file;
@@ -59,12 +58,13 @@ void ReadWrite::save_pdf_file(string file_name, LevelList& lines)
 	if (!file.is_open())
 	{
 		cout << "Unable to open the file.\n";
-		throw "Could't Open File";
+		return 1;
 	}
 
 	file << pdf;
 
 	file.close();
+	return 0;
 }
 struct pdfLine
 {
