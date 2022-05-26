@@ -10,9 +10,9 @@ class ReadWrite
 {
 public:
 	ReadWrite();
-	void load(string, LevelList&);
-	void save_text_file(string file_name, LevelList&);
-	void save_pdf_file(string file_name,LevelList&);
+	int load(string, LevelList&);
+	int save_text_file(string file_name, LevelList&);
+	int save_pdf_file(string file_name,LevelList&);
 	
 	~ReadWrite();
 
